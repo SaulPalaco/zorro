@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1f245etuetal"]
+
+[ext_resource type="Texture2D" uid="uid://c7rde4hex70an" path="res://Assets/manzana.png" id="1_hhmsx"]
+[ext_resource type="Script" path="res://Scripts/colleccionable.gd" id="1_umsrr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a2y6w"]
+radius = 7.28011
+
+[node name="Colleccionable" type="Area2D"]
+script = ExtResource("1_umsrr")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.196316, 0.195234)
+texture = ExtResource("1_hhmsx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_a2y6w")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,0 +1,137 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2qq6nh31phh8"]
+
+[ext_resource type="Texture2D" uid="uid://gm3dvfrkhsge" path="res://Assets/bosque.png" id="1_4frdu"]
+[ext_resource type="Script" path="res://Scripts/game.gd" id="1_2343f"]
+[ext_resource type="PackedScene" uid="uid://4c0wd4hyu077" path="res://Scenes/player.tscn" id="1_ae8um"]
+[ext_resource type="PackedScene" uid="uid://c1f245etuetal" path="res://Scenes/colleccionable.tscn" id="3_p0mdw"]
+[ext_resource type="PackedScene" uid="uid://b2abb8k77udpw" path="res://Scenes/spawner.tscn" id="4_50mm0"]
+[ext_resource type="Script" path="res://Scripts/DeathScreen.gd" id="6_6dde0"]
+[ext_resource type="AudioStream" uid="uid://bkphtc7hxrc4m" path="res://Assets/Sonidos/Daydream Anatomy - 8-Bit Heroes - 03 Nin10day.mp3" id="7_d7c7s"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yiado"]
+size = Vector2(323, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iar0t"]
+size = Vector2(11, 185)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5dn2i"]
+font_size = 24
+
+[node name="Game" type="Node"]
+script = ExtResource("1_2343f")
+
+[node name="Bosque" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(160, 90)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_4frdu")
+
+[node name="Player" parent="." instance=ExtResource("1_ae8um")]
+position = Vector2(149, 157)
+
+[node name="CajaDeColision" type="Node" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="CajaDeColision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CajaDeColision/StaticBody2D"]
+position = Vector2(160.5, 169)
+shape = SubResource("RectangleShape2D_yiado")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="CajaDeColision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CajaDeColision/StaticBody2D2"]
+position = Vector2(-6, 84)
+shape = SubResource("RectangleShape2D_iar0t")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="CajaDeColision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CajaDeColision/StaticBody2D3"]
+position = Vector2(325, 85)
+shape = SubResource("RectangleShape2D_iar0t")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="CajaDeColision"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CajaDeColision/StaticBody2D4"]
+position = Vector2(159, -9)
+shape = SubResource("RectangleShape2D_yiado")
+
+[node name="Colleccionable" parent="." instance=ExtResource("3_p0mdw")]
+position = Vector2(273, 122)
+
+[node name="Spawner" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(302, 52)
+
+[node name="Spawner2" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(256, 44)
+
+[node name="Spawner3" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(208, 43)
+
+[node name="Spawner4" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(167, 47)
+
+[node name="Spawner5" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(121, 41)
+
+[node name="Spawner6" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(69, 41)
+
+[node name="Spawner7" parent="." instance=ExtResource("4_50mm0")]
+position = Vector2(17, 39)
+
+[node name="ScoreLabel" type="Label" parent="."]
+texture_filter = 1
+offset_left = 158.0
+offset_top = 1.0
+offset_right = 198.0
+offset_bottom = 24.0
+text = "0"
+label_settings = SubResource("LabelSettings_5dn2i")
+
+[node name="DeathScreen" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("6_6dde0")
+
+[node name="MsgLabel" type="Label" parent="DeathScreen"]
+offset_left = 127.0
+offset_top = 30.0
+offset_right = 204.0
+offset_bottom = 53.0
+text = "PERDISTE!"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DeathScreen"]
+offset_left = 133.0
+offset_top = 53.0
+offset_right = 195.0
+offset_bottom = 93.0
+
+[node name="Label" type="Label" parent="DeathScreen/HBoxContainer"]
+layout_mode = 2
+text = "Score:"
+
+[node name="FinalScore" type="Label" parent="DeathScreen/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="ReinicioButton" type="Button" parent="DeathScreen"]
+offset_left = 72.0
+offset_top = 84.0
+offset_right = 158.0
+offset_bottom = 115.0
+text = "REINICIAR"
+
+[node name="SalirButton2" type="Button" parent="DeathScreen"]
+offset_left = 181.0
+offset_top = 84.0
+offset_right = 233.0
+offset_bottom = 115.0
+text = "SALIR"
+
+[node name="JuegoSonido" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_d7c7s")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="pressed" from="DeathScreen/ReinicioButton" to="DeathScreen" method="_on_reinicio_button_pressed"]
+[connection signal="pressed" from="DeathScreen/SalirButton2" to="DeathScreen" method="_on_salir_button_2_pressed"]
